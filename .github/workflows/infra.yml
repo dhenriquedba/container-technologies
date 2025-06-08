@@ -1,4 +1,4 @@
-name: 'Deploy App'
+name: 'Deploy Infra'
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: app
+        working-directory: infra
 
     steps:
       - name: Download do Repositório
@@ -75,7 +75,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: app
+        working-directory: infra
 
     steps:
       - name: Download do Repositório
@@ -95,7 +95,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ./app/deploy/ecs-task-definition.json
+          task-definition: ./infra/deploy/ecs-task-definition.json
           container-name: ${{ env.IMAGE_NAME }}
           image: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG_APP }}
           taskRoleArn: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/LabRole
@@ -103,7 +103,7 @@ jobs:
 
       - name: View inside file ecs-task-definition.json
         run: |
-          cat ./deploy/ecs-task-definition.json
+          cat ./infra/ecs-task-definition.json
 
       - name: Register Task Definition
         id: task-definition
