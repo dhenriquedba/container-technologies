@@ -126,29 +126,29 @@ jobs:
               }
             }" >> provider.tf
             cat provider.tf
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Terraform | Initialize backend
         run: terraform init
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Terraform | Check Syntax IaC Code
         run: terraform validate
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Terraform | Plan
         run: terraform plan -out tfplan.binary
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Terraform Destroy
         if: env.DESTROY == 'true'
         run: terraform destroy -auto-approve -input=false
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Terraform Creating and Update
         if: env.DESTROY != 'true'
         run: terraform apply -auto-approve -input=false
-        working-directory: ./app/deploy
+        working-directory: ./infra/deploy
 
       - name: Deploy App in Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
