@@ -5,7 +5,7 @@ ADD app.gz /usr/share/nginx/html/
 CMD ["nginx", "-g", "daemon off;"]
 
 FROM python:3.10-alpine3.21
-LABEL MANTAINER="Dennis Tavares"
+LABEL MANTAINER="Dennis Tavares "
 
 WORKDIR /app
 
